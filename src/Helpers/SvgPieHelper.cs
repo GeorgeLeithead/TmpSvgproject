@@ -1,13 +1,8 @@
 namespace TmpSvgProject.Helpers;
 
-public static class DashboardHelper
+public static class SvgPieHelper
 {
-	public static string GeneratePieChart(int width, int height, List<PieSegment> segments)
-	{
-		return GeneratePieChart(width, height, segments, null);
-	}
-
-	public static string GeneratePieChart(int width, int height, List<PieSegment> segments, string? styleClass)
+	public static string GeneratePieChart(int width, int height, List<PieSegment> segments, int borderWidth, Color borderColor, string? styleClass, int fontSize = 16)
 	{
 		// Generate the SVG code for the pie chart
 		StringBuilder svgBuilder = new();
@@ -18,20 +13,27 @@ public static class DashboardHelper
 			segments.Add(new PieSegment(null, Color.White, 100 - segmentTotalPercent, Color.White, null, null));
 		}
 
-		_ = svgBuilder.AppendLine(GeneratePieChartSegments(width, height, segments, 1, Color.Black));
+		_ = svgBuilder.AppendLine(GeneratePieChartSegments(width, height, segments, borderWidth, borderColor, fontSize));
 		_ = svgBuilder.AppendLine("</svg>");
 
 		return svgBuilder.ToString();
 	}
 
-	public static string GeneratePieChartSegments(int width, int height, List<PieSegment> segments, int borderWidth, Color borderColor)
+	public static string GeneratePieChart(int width, int height, List<PieSegment> segments) => GeneratePieChart(width, height, segments, 1, Color.Black, null, 16);
+
+	public static string GeneratePieChart(int width, int height, List<PieSegment> segments, string? styleClass) => GeneratePieChart(width, height, segments, 1, Color.Black, styleClass, 16);
+
+	private static string GeneratePieChartSegments(int width, int height, List<PieSegment> segments, int borderWidth, Color borderColor, int fontSize)
 	{
+		width -= (borderWidth * 2);
+		height -= (borderWidth * 2);
+
 		// Calculate the center of the pie chart
-		double centerX = (double)width / 2;
-		double centerY = (double)height / 2;
+		var centerX = ((double)width / 2) + borderWidth;
+		var centerY = ((double)height / 2) + borderWidth;
 
 		// Calculate the radius of the pie chart
-		double radius = (double)Math.Min(width - (borderWidth * 2), height - (borderWidth * 2)) / 2;
+		var radius = (double)Math.Min(width, height) / 2;
 
 		// Generate the SVG paths for each segment
 		StringBuilder pathsBuilder = new();
@@ -39,10 +41,10 @@ public static class DashboardHelper
 		foreach (PieSegment segment in segments)
 		{
 			// Calculate the end angle of the segment
-			double endAngle = startAngle + (segment.Percentage * 3.6f);
-			double labelAngle = startAngle + ((endAngle - startAngle) / 2);
-			double labelX = centerX + (0.7f * radius * Math.Sin(Math.PI * labelAngle / 180));
-			double labelY = centerY - (0.7f * radius * Math.Cos(Math.PI * labelAngle / 180));
+			var endAngle = startAngle + (segment.Percentage * 3.6f);
+			var labelAngle = startAngle + ((endAngle - startAngle) / 2);
+			var labelX = centerX + (0.7f * radius * Math.Sin(Math.PI * labelAngle / 180));
+			var labelY = centerY - (0.7f * radius * Math.Cos(Math.PI * labelAngle / 180));
 
 			// Generate the SVG path for the segment
 			var largeArc = (segment.Percentage > 50) ? 1 : 0;
@@ -67,12 +69,12 @@ public static class DashboardHelper
 			{
 				_ = pathsBuilder.Append("<circle cx=\"").Append(centerX).Append("\" cy=\"").Append(centerY).Append("\" r=\"").Append(radius).Append("\" fill=\"").Append(ColorTranslator.ToHtml(segment.BackgroundColor)).Append("\" stroke=\"").Append(ColorTranslator.ToHtml(borderColor)).Append("\" stroke-width=\"").Append(borderWidth).AppendLine("\" />");
 				labelX = centerX;
-				labelY = centerY * 1.1;
+				labelY = centerY + (fontSize / Math.PI);
 			}
 
 			if (!string.IsNullOrWhiteSpace(segment.Label))
 			{
-				_ = pathsBuilder.Append("<text x=\"").Append(labelX).Append("\" y=\"").Append(labelY).Append("\" font-size=\"16\" text-anchor=\"middle\" fill=\"").Append(ColorTranslator.ToHtml(segment.LabelColor)).Append("\">").Append(segment.Label).AppendLine("</text>");
+				_ = pathsBuilder.Append("<text x=\"").Append(labelX).Append("\" y=\"").Append(labelY).Append("\" font-size=\"").Append(fontSize).Append("\" text-anchor=\"middle\" fill=\"").Append(ColorTranslator.ToHtml(segment.LabelColor)).Append("\">").Append(segment.Label).AppendLine("</text>");
 			}
 
 			if (string.IsNullOrWhiteSpace(segment.Href))

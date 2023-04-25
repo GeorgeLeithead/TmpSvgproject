@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <div class="text-center py-0">
                             <div class="main-wid position-relative">
-                                <h4 class="text-white mb-0">Welcome to RepairsHelp - Bob da Builder</h4>
+                                <h4 class="text-white mb-0">Welcome to ASP.NET - SVG Pie Charts</h4>
                             </div>
                         </div>
                     </div>
@@ -29,11 +29,28 @@
                 <div class="card-body">
                     <div class="row">
                         @{
-                            for (var i = 0; i < 12; i++)
+                            List<PieSegment> segments = new()
+                                {
+                                    new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
+                                    new PieSegment("22", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("3", Color.White, 100, Color.Orange, null, "#"),
+                                    new PieSegment("7", Color.White, 100, Color.Blue, null, "#"),
+                                    new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
+                                    new PieSegment("37", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("73", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("1", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("11", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("17", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
+                                    new PieSegment("19", Color.White, 100, Color.Red, null, "#"),
+                                };
+                            foreach (var segment in segments)
                             {
+                                List<PieSegment> thisSegment = new();
+                                thisSegment.Add(segment);
                                 <div class="col-sm-2 mb-3">
                                     <div class="row justify-content-center">
-                                        <button type="button" class="col-sm-12 btn btn-info btn-circle btn-lg" style="background: red"><span>99</span></button>
+                                        <vc:svg-pie width="100" height="100" segments="@thisSegment" border-width="1" border-color="@Color.Black" font-size="48" style="@null" />
                                     </div>
                                     <div class="col-sm-12 text-center fs-6">Some Title</div>
                                 </div>
@@ -45,46 +62,44 @@
             <div class="col-sm-4 card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-4 justify-content-center">Awaiting Collection</div>
-                        <div class="col-sm-4 justify-content-center">TORTs</div>
-                        <div class="col-sm-4 justify-content-center">RUD %</div>
+                        <div class="col-sm-4 text-center fs-6">A title</div>
+                        <div class="col-sm-4 text-center fs-6">Another title</div>
+                        <div class="col-sm-4 text-center fs-6">Yet another</div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-4 justify-content-center">@{
-                                var awaitingCollectionPercent = 100;
-                                decimal awaitingCollectionAmount = 999999.99M;
-                                List<PieSegment> awitingCollectionSegments = new()
+                                var aTitlePercent = 100;
+                                decimal aTitleAmount = 999999.99M;
+                                List<PieSegment> aTitleSegments = new()
                                 {
-                                    new PieSegment(awaitingCollectionAmount.ToString("C2"), Color.Black, awaitingCollectionPercent, ColorTranslator.FromHtml("#DFB722"), null, null) 
+                                    new PieSegment(aTitleAmount.ToString("C2"), Color.Black, aTitlePercent, ColorTranslator.FromHtml("#DFB722"), null, null)
                                 };
                             }
-                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, awitingCollectionSegments))
-                            <br>
-                            <vc:svg-pie width="100" height="100" segments="@awitingCollectionSegments" style="@null" />
+                            <vc:svg-pie width="100" height="100" segments="@aTitleSegments" border-width="1" border-color="@Color.Black" font-size="16" style="@null" />
                         </div>
                         <div class="col-sm-4 justify-content-center">
                             @{
                                 var t1percent = 25;
                                 var t2percent = 73;
                                 var t3percent = 2;
-                                List<PieSegment> tortSegments = new()
+                                List<PieSegment> anotherTitleSegments = new()
                                 {
-                                new PieSegment("T1", Color.White, t1percent, Color.Red, $"TORT Letter 1: {t1percent}%", "#T1"),
-                                new PieSegment("T2", Color.White, t2percent, Color.Green, $"TORT Letter 2: {t2percent}%", "#T2"),
-                                new PieSegment("T3", Color.White, t3percent, Color.Blue, $"TORT Letter 3: {t3percent}%", "#T3")
+                                new PieSegment("T1", Color.White, t1percent, Color.Red, $"T 1: {t1percent}%", "#T1"),
+                                new PieSegment("T2", Color.White, t2percent, Color.Green, $"T 2: {t2percent}%", "#T2"),
+                                new PieSegment("T3", Color.White, t3percent, Color.Blue, $"T 3: {t3percent}%", "#T3")
                                 };
                             }
-                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, tortSegments))
+                            <vc:svg-pie width="100" height="100" segments="@anotherTitleSegments" border-width="1" border-color="@Color.Black" font-size="16" style="@null" />
                         </div>
                         <div class="col-sm-4 justify-content-center">
                             @{
-                                var rudPercent = 17;
-                                List<PieSegment> rudSegments = new()
+                                var yetAnotherPercent = 17;
+                                List<PieSegment> yetAnotherSegments = new()
                                 {
-                                    new PieSegment(string.Empty, Color.Black, rudPercent, Color.Gold, $"Watches and Jewellery: {rudPercent}%", null),
+                                    new PieSegment(string.Empty, Color.Black, yetAnotherPercent, Color.Gold, $"Watches and Jewellery: {yetAnotherPercent}%", null),
                                 };
                             }
-                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, rudSegments))
+                            <vc:svg-pie width="100" height="100" segments="@yetAnotherSegments" border-width="1" border-color="@Color.Black" font-size="16" style="@null" />
                         </div>
                     </div>
                 </div>
