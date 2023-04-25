@@ -33,12 +33,12 @@
                                 {
                                     new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
                                     new PieSegment("22", Color.White, 100, Color.Red, null, "#"),
-                                    new PieSegment("3", Color.White, 100, Color.Orange, null, "#"),
+                                    new PieSegment("3", Color.Purple, 100, Color.Orange, null, "#"),
                                     new PieSegment("7", Color.White, 100, Color.Blue, null, "#"),
-                                    new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
-                                    new PieSegment("37", Color.White, 100, Color.Red, null, "#"),
-                                    new PieSegment("73", Color.White, 100, Color.Red, null, "#"),
-                                    new PieSegment("1", Color.White, 100, Color.Red, null, "#"),
+                                    new PieSegment("0", Color.White, 100, Color.Magenta, null, "#"),
+                                    new PieSegment("37", Color.Green, 100, Color.Cyan, null, "#"),
+                                    new PieSegment("73", Color.Blue, 100, Color.Yellow, null, "#"),
+                                    new PieSegment("1", Color.White, 100, Color.Purple, null, "#"),
                                     new PieSegment("11", Color.White, 100, Color.Red, null, "#"),
                                     new PieSegment("17", Color.White, 100, Color.Red, null, "#"),
                                     new PieSegment("0", Color.White, 100, Color.Green, null, "#"),
@@ -79,14 +79,16 @@
                         </div>
                         <div class="col-sm-4 justify-content-center">
                             @{
-                                var t1percent = 25;
-                                var t2percent = 73;
-                                var t3percent = 2;
+                                var t1percent = 15;
+                                var t2percent = 37;
+                                var t3percent = 28;
+                                var t4percent = 20;
                                 List<PieSegment> anotherTitleSegments = new()
                                 {
                                 new PieSegment("T1", Color.White, t1percent, Color.Red, $"T 1: {t1percent}%", "#T1"),
                                 new PieSegment("T2", Color.White, t2percent, Color.Green, $"T 2: {t2percent}%", "#T2"),
-                                new PieSegment("T3", Color.White, t3percent, Color.Blue, $"T 3: {t3percent}%", "#T3")
+                                new PieSegment("T3", Color.White, t3percent, Color.Blue, $"T 3: {t3percent}%", "#T3"),
+                                new PieSegment("T4", Color.White, t4percent, Color.Orange, $"T 4: {t3percent}%", "#T4"),
                                 };
                             }
                             <vc:svg-pie width="100" height="100" segments="@anotherTitleSegments" border-width="1" border-color="@Color.Black" font-size="16" style="@null" />
