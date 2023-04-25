@@ -1,0 +1,99 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <div class="text-center py-0">
+                            <div class="main-wid position-relative">
+                                <h4 class="text-white mb-0">Welcome to RepairsHelp - Bob da Builder</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard">
+            <div class="col-sm-8 card">
+                <div class="card-body">
+                    <div class="row">
+                        @{
+                            for (var i = 0; i < 12; i++)
+                            {
+                                <div class="col-sm-2 mb-3">
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="col-sm-12 btn btn-info btn-circle btn-lg" style="background: red"><span>99</span></button>
+                                    </div>
+                                    <div class="col-sm-12 text-center fs-6">Some Title</div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 justify-content-center">Awaiting Collection</div>
+                        <div class="col-sm-4 justify-content-center">TORTs</div>
+                        <div class="col-sm-4 justify-content-center">RUD %</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 justify-content-center">@{
+                                var awaitingCollectionPercent = 100;
+                                decimal awaitingCollectionAmount = 999999.99M;
+                                List<PieSegment> awitingCollectionSegments = new()
+                                {
+                                    new PieSegment(awaitingCollectionAmount.ToString("C2"), Color.Black, awaitingCollectionPercent, ColorTranslator.FromHtml("#DFB722"), null, null) 
+                                };
+                            }
+                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, awitingCollectionSegments))
+                            <br>
+                            <vc:svg-pie width="100" height="100" segments="@awitingCollectionSegments" style="@null" />
+                        </div>
+                        <div class="col-sm-4 justify-content-center">
+                            @{
+                                var t1percent = 25;
+                                var t2percent = 73;
+                                var t3percent = 2;
+                                List<PieSegment> tortSegments = new()
+                                {
+                                new PieSegment("T1", Color.White, t1percent, Color.Red, $"TORT Letter 1: {t1percent}%", "#T1"),
+                                new PieSegment("T2", Color.White, t2percent, Color.Green, $"TORT Letter 2: {t2percent}%", "#T2"),
+                                new PieSegment("T3", Color.White, t3percent, Color.Blue, $"TORT Letter 3: {t3percent}%", "#T3")
+                                };
+                            }
+                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, tortSegments))
+                        </div>
+                        <div class="col-sm-4 justify-content-center">
+                            @{
+                                var rudPercent = 17;
+                                List<PieSegment> rudSegments = new()
+                                {
+                                    new PieSegment(string.Empty, Color.Black, rudPercent, Color.Gold, $"Watches and Jewellery: {rudPercent}%", null),
+                                };
+                            }
+                            @Html.Raw(Helpers.DashboardHelper.GeneratePieChart(100, 100, rudSegments))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    svg > a:link, svg > a:active, svg > a:visited{
+        text-decoration: none;
+    }
+</style>

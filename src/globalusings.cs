@@ -1,0 +1,10 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.RazorPages;
+global using Microsoft.Extensions.Logging;
+global using System.Collections.Generic;
+global using System;
+global using System.Drawing;
+global using System.Linq;
+global using System.Text;
+global using TmpSvgProject.Helpers;
+global using TmpSvgProject.Models;
